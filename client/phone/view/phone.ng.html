@@ -19,9 +19,6 @@
 
 </div>
 <div class="beerGradeHistory">
-    <li ng-repeat="b in beerList">
-        <p>Beer Number: {{b.beerNum}}</p>
-        <p>Rating: {{b.rating}} </p>
-        <p>test: name: {{ b.name }}</p>
-    </li>
+    <canvas id="beerGradeHistory" class="chart chart-bar" chart-data="data" chart-labels="labels"
+    chart-legend="true" chart-series="series"></canvas>
 </div>
