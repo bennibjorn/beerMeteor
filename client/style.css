@@ -1,9 +1,12 @@
 .gradeInputDiv {
-
+    text-align: center;
 }
 .gradeInput {
 
 }
 .gradeText {
 
+}
+.submitBtnDiv {
+    text-align: center;
 }

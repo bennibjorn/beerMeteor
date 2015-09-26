@@ -1,18 +1,18 @@
 <div class="allInputs">
-    <div class="gradeInputDiv">
+    <div class="gradeInputDiv col-xs-4">
         <input ng-model="tasteGrade" type="number" min="1" max="10" class="gradeInput">
         <p class="gradeText">Taste</p>
     </div>
-    <div class="gradeInputDiv">
+    <div class="gradeInputDiv col-xs-4">
         <input ng-model="smellGrade" type="number" min="1" max="10" class="gradeInput">
         <p class="gradeText">Smell</p>
     </div>
-    <div class="gradeInputDiv">
+    <div class="gradeInputDiv col-xs-4">
         <input ng-model="finishGrade" type="number" min="1" max="10" class="gradeInput">
         <p class="gradeText">Finish</p>
     </div>
     <div class="submitBtnDiv">
-        <button type="submit" ng-click="addBeer(tasteGrade, smellGrade, finishGrade)" class="">Submit</button>
+        <button class="btn btn-default" type="submit" ng-click="addBeer(tasteGrade, smellGrade, finishGrade)">Submit</button>
     </div>
 </div>
 <div class="favBeerDiv">
