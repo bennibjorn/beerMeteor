@@ -56,6 +56,7 @@ angular.module('beerMeteor').controller('PhoneInputController', ['$scope', '$met
     var init = function() {
         console.log("init");
         //console.log("beerList.size() = " + $scope.beerList.size());
+        updateChart();
     }
     init();
 }]);
