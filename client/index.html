@@ -3,5 +3,18 @@
     <title>Beer tasting</title>
 </head>
 <body>
-    <div ui-view></div>
+    <div>
+  <header class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <ul class="nav nav-pills">
+            <li role="presentation" class="active"><a href="/phone">Home</a></li>
+            <li role="presentation"><a href="/phoneSort">Best to worst</a></li>
+        </ul>
+      </div>
+      <meteor-include src="loginButtons"></meteor-include>
+    </div>
+  </header>
+  <div ui-view class="container-fluid"></div>
+</div>
 </body>
