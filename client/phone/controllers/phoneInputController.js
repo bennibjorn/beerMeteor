@@ -22,6 +22,10 @@ angular.module('beerMeteor').controller('PhoneInputController', ['$scope', '$met
 
     // adds the rating of the beer to the list
     $scope.addBeer = function(taste, smell, finish) {
+        if (taste == 0 || smell == 0 || finish == 0) {
+            console.log("taste, smell and/or finish is not set");
+            return;
+        }
       var rating = (taste + smell + finish) / 3;
       var beerGrade = {
           'beerNum': beerNum,
