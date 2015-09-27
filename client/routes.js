@@ -8,7 +8,12 @@ function($urlRouterProvider, $stateProvider, $locationProvider){
       url: '/phone',
       templateUrl: 'client/phone/view/phone.ng.html',
       controller: 'PhoneInputController'
+    })
+    .state('home', {
+    	url: '/home',
+    	templateUrl: 'client/home/view/home.ng.html',
+    	controller: 'HomeController'
     });
 
-  $urlRouterProvider.otherwise("/phone");
+  $urlRouterProvider.otherwise("/home");
 }]);

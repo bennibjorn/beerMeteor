@@ -1,0 +1,22 @@
+TODO
+
+User first enters the "home" screen, where you can join an event(tasting? party?), or create one
+
+Create
+	Able to select if the event is public or private
+	Add a beer to the event
+	Anonymous beers (beer 1, beer 2) with a reveal at the end or revealed from the start (Kaldi, Einstok) 
+
+Join
+	Gets a list of events, can select one to join the "room"
+
+Room
+	If the user is the owner of the room, be able to select if he wants to be the TV, admin or regular user
+	
+	Regular user goes to the tasting screen - where there is a name of the beer (beer 1 / kaldi), smell, taste, finish and submit
+	User also sees his favorite beer and his rating history
+
+	TV sees the rating the current beer is getting, crowd favorite/least favorite and the rating history for all beers
+
+	Admin sees all users in the room and can force the next beer before all have voted
+
