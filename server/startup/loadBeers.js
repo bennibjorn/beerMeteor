@@ -26,4 +26,16 @@
       for (var i = 0; i < beers.length; i++)
         Beers.insert(beers[i]);
     }
+     if (Events.find().count() == 0) {
+         var events = [
+            {
+                "id": 0,
+                "name": "bjorsmokkun benna",
+                "owner": "bennibjorn@hotmail.com",
+                "public": true
+            }
+         ];
+        for (var i = 0; i < events.length; i++)
+             Events.insert(events[i]);
+    }
   });
