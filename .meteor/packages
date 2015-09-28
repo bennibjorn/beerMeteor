@@ -22,3 +22,4 @@ angular
 angularui:angular-ui-router
 sebastianilves:angular-chart-js
 twbs:bootstrap
+angularui:angular-ui-bootstrap@0.13.0

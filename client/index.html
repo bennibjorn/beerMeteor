@@ -8,11 +8,12 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="/phone">Home</a></li>
-            <li role="presentation"><a href="/phoneSort">Best to worst</a></li>
+            <li role="presentation" class="active"><a href="/home">Home</a></li>
         </ul>
       </div>
-      <meteor-include src="loginButtons"></meteor-include>
+        <div class="navbar-right-container">
+            <meteor-include src="loginButtons"></meteor-include>
+        </div>
     </div>
   </header>
   <div ui-view class="container-fluid"></div>
