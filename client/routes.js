@@ -4,10 +4,10 @@ function($urlRouterProvider, $stateProvider, $locationProvider){
   $locationProvider.html5Mode(true);
 
   $stateProvider
-    .state('phone', {
-      url: '/phone',
-      templateUrl: 'client/phone/view/phone.ng.html',
-      controller: 'PhoneInputController'
+    .state('beerTasting', {
+      url: '/beerTasting/:id',
+      templateUrl: 'client/phone/view/beerTasting.ng.html',
+      controller: 'BeerTastingController'
     })
     .state('home', {
     	url: '/home',
