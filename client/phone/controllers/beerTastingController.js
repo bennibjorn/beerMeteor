@@ -1,4 +1,6 @@
-angular.module('beerMeteor').controller('PhoneInputController', ['$scope', '$meteor', function ($scope, $meteor) {
+angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$meteor',
+        function ($scope, $meteor) {
+
     var beerNum = 0;
     $scope.tasteGrade = 0;
     $scope.smellGrade = 0;
@@ -37,21 +39,31 @@ angular.module('beerMeteor').controller('PhoneInputController', ['$scope', '$met
       console.log("Pushing beer to beerList, beerNum: " + beerNum + ", taste: " + taste + ", smell: " + smell + ", finish: " + finish + ", rating: " + rating);
       $scope.beerList.save(beerGrade);
       beerNum++;
+        // disable button until next beer/round starts
     }
     // removeAll for testing purposes
     window.removeAll = function() {
       $scope.beerList.remove();
     }
+    // to sort the beers from best to worst,
+    //should be called after all beers have been rated for results
     var sortBeers = function() {
       console.log("sortBeers called");
       //var listLength = $scope.beerList.size();
-      console.log("listLength: " + listLength);
+      //console.log("listLength: " + listLength);
     }
     var updateChart = function() {
+        // get amount of beers
+        // avoid duplicates, might have to clear data before this
         for (var i = 0; i < 4; i++) {
             console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + $scope.beerList[i].rating);
             $scope.labels.push($scope.beerList[i].beerNum);
-            $scope.data[0].push($scope.beerList[i].rating);
+            if ($scope.beerList[i] == null) {
+                //rating not yet given set as 0
+                $scope.data[0].push(0);
+            } else {
+                $scope.data[0].push($scope.beerList[i].rating);
+            }
         }
     }
 
