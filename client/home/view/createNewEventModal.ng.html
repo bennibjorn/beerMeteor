@@ -1,0 +1,33 @@
+<div class="container-fluid ma-add-new-party-container">
+    <div class="alert alert-info" ng-hide="$root.currentUser || $root.loggingIn">
+        Please log in to create an event!
+    </div>
+
+<!--    <form ng-show="$root.currentUser || $root.loggingIn"> -->
+    <form>
+        <h2>Create a new event</h2>
+        <button ng-click="addNewEvent()" class="btn btn-default">Create Event</button>
+        <div class="form-group">
+            <label for="nameInput">Name</label>
+            <input ng-model="newEvent.name" id="nameInput" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="public">
+                <input type="checkbox" ng-model="newEvent.public" id="public"> Public
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="addBeer" class="middleText">Add beer to list</label>
+            <input ng-model="beerName" id="description" type="text" class="form-control">
+            <button class="btn btn-success" ng-click="addBeerToList()">Add</button>
+        </div>
+    </form>
+    <!-- <ul class="beerList" ng-show="$root.currentUser || $root.loggingIn"> -->
+    <ul class="beerList">
+        <p class="middleText"> Beers to taste: </p>
+        <li ng-repeat="b in beerList">
+            <div class="col-xs-11"> <p class="middleText"> {{ b.beerName }} </p> </div>
+            <div class="col-xs-1"> <button class="btn btn-danger" ng-click="removeFromList(b.name)">X</button> </div>
+        </li>
+    </ul>
+</div>

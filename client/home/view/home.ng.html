@@ -1,10 +1,9 @@
 <!-- Sidebar on the left, top and middle content -->
-<div class="col-md-4">
-	<h3><a href="/beerTasting">beerTasting</a></h3>
-    <button class="btn btn-default" ng-click="createEvent()">Create new event</button>
+<div class="col-md-2">
+    <button class="btn btn-default" ng-click="openAddNewEventModal()">Create new event</button>
 </div>
 
-<div class="col-md-8">
+<div class="col-md-10">
     <div class="col-md-12 eventList" ng-repeat="e in events">
         <a href="/beerTasting/{{e.id}}">
             <div class="col-xs-6"> Name: {{ e.name }} </div>
