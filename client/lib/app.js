@@ -1,4 +1,4 @@
-angular.module('beerMeteor', ['angular-meteor', 'ui.router', 'chart.js', 'ui.bootstrap']);
+angular.module('beerMeteor', ['angular-meteor', 'ui.router', 'chart.js', 'ui.bootstrap', 'ngMaterial']);
 
 function onReady() {
   angular.bootstrap(document, ['beerMeteor']);

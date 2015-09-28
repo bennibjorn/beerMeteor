@@ -20,3 +20,10 @@
 .middleText {
     text-align: center;
 }
+md-slider .md-track-container {
+    height: 1em;
+}
+.gradeSlider {
+    margin-left: 5em;
+    margin-right: 5em;
+}
