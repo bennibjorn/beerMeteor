@@ -1,5 +1,8 @@
-angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$meteor',
-        function ($scope, $meteor) {
+angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$meteor', '$stateParams',
+        function ($scope, $meteor, $stateParams) {
+
+            $scope.eventID = $meteor.object(Events, $stateParams.id);
+
 
     var beerNum = 0;
     $scope.tasteGrade = 0;
