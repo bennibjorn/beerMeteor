@@ -9,6 +9,7 @@ Beers = new Mongo.Collection("beers");
 Events = new Mongo.Collection("events");
 /*
 {
+    "id": 0,
     "name": "bjorsmokkun benna",
     "owner": "bennibjorn@hotmail.com",
     "public": false

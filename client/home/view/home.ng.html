@@ -1,10 +1,13 @@
 <!-- Sidebar on the left, top and middle content -->
 <div class="col-md-4">
-	<h3><a href="/phone">beerTasting</a></h3>
+	<h3><a href="/beerTasting">beerTasting</a></h3>
 </div>
 
 <div class="col-md-8">
-    <div class="col-md-12" ng-repeat="e in events">
-
+    <div class="col-md-12 eventList" ng-repeat="e in events">
+        <a href="/beerTasting/{{e.id}}">
+            <div class="col-xs-6"> Name: {{ e.name }} </div>
+            <div class="col-xs-6"> Owner: {{ e.owner }} </div>
+        </a>
     </div>
 </div>
