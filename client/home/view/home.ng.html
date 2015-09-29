@@ -1,13 +1,16 @@
 <!-- Sidebar on the left, top and middle content -->
 <div class="col-md-2">
-    <button class="btn btn-default" ng-click="openAddNewEventModal()">Create new event</button>
+    <md-button class="md-button md-raised" ng-click="openAddNewEventModal()">Create new event</md-button>
 </div>
 
 <div class="col-md-10">
-    <div class="col-md-12 eventList" ng-repeat="e in events">
-        <a href="/beerTasting/{{e.id}}">
-            <div class="col-xs-6"> Name: {{ e.name }} </div>
-            <div class="col-xs-6"> Owner: {{ e.owner }} </div>
-        </a>
-    </div>
+    <md-list>
+        <md-list-item ng-repeat="e in events" class="eventList">
+            <a href="/beerTasting/{{e.id}}">
+                <div class="md-list-item-text">
+                    <p> {{ e.name }} </p>
+                </div>
+            </a>
+        </md-list-item>
+    </md-list>
 </div>

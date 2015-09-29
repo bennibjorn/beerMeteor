@@ -1,17 +1,14 @@
-angular.module('beerMeteor').controller('HomeController', ['$scope', '$meteor', '$modal',
-    function ($scope, $meteor, $modal) {
+angular.module('beerMeteor').controller('HomeController', ['$scope', '$meteor', '$mdDialog',
+    function ($scope, $meteor, $mdDialog) {
     
     $scope.events = $meteor.collection(Events);
 
     $scope.openAddNewEventModal = function () {
-      var modalInstance = $modal.open({
-        animation: true,
-        templateUrl: 'client/home/view/createNewEventModal.ng.html',
-        controller: 'CreateNewEventController',
-      });
-
-      modalInstance.result.then(function () {
-      }, function () {
+        var modalInstance = $mdDialog.show({
+            animation: true,
+            templateUrl: 'client/home/view/createNewEventModal.ng.html',
+            controller: 'CreateNewEventController',
+            clickOutsideToClose:true
       });
     };
 

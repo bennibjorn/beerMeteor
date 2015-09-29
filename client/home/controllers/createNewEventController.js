@@ -1,5 +1,5 @@
-angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '$meteor', '$rootScope', '$state', '$modalInstance',
-  function ($scope, $meteor, $rootScope, $state, $modalInstance) {
+angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '$meteor', '$rootScope', '$state', '$mdDialog',
+  function ($scope, $meteor, $rootScope, $state, $mdDialog) {
 
       var events = $meteor.collection(Events);
 
@@ -37,7 +37,7 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
             "beerList": $scope.beerList
         }
         events.push(newEvent);
-        $modalInstance.close();
+        $mdDialog.hide();
     }
     $scope.removeFromList = function(name) {
         for (var i = 0; i < $scope.beerList.length; i++) {
