@@ -7,7 +7,12 @@ function($urlRouterProvider, $stateProvider, $locationProvider){
     .state('beerTasting', {
       url: '/beerTasting/:id',
       templateUrl: 'client/phone/view/beerTasting.ng.html',
-      controller: 'BeerTastingController'
+      controller: 'BeerTastingController',
+      resolve: {
+          "currentUser": ["$meteor", function($meteor){
+            return $meteor.requireUser();
+          }]
+        }
     })
     .state('home', {
     	url: '/home',
@@ -16,4 +21,16 @@ function($urlRouterProvider, $stateProvider, $locationProvider){
     });
 
   $urlRouterProvider.otherwise("/home");
+}]);
+
+// error handling
+
+angular.module("beerMeteor").run(['$rootScope', '$state', function($rootScope, $state) {
+  $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+    // We can catch the error thrown when the $requireUser promise is rejected
+    // and redirect the user back to the main page
+    if (error === 'AUTH_REQUIRED') {
+      $state.go('/home');
+    }
+  });
 }]);

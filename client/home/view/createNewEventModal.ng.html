@@ -3,8 +3,7 @@
         Please log in to create an event!
     </div>
 
-<!--    <form ng-show="$root.currentUser || $root.loggingIn"> -->
-    <form>
+    <form ng-show="$root.currentUser || $root.loggingIn">
         <h2>Create a new event</h2>
         <button ng-click="addNewEvent()" class="btn btn-default">Create Event</button>
         <div class="form-group">
@@ -22,8 +21,7 @@
             <button class="btn btn-success" ng-click="addBeerToList()">Add</button>
         </div>
     </form>
-    <!-- <ul class="beerList" ng-show="$root.currentUser || $root.loggingIn"> -->
-    <ul class="beerList">
+    <ul class="beerList" ng-show="$root.currentUser || $root.loggingIn">
         <p class="middleText"> Beers to taste: </p>
         <li ng-repeat="b in beerList">
             <div class="col-xs-11"> <p class="middleText"> {{ b.beerName }} </p> </div>
