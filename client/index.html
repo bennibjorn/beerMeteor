@@ -3,19 +3,14 @@
     <title>Beer tasting</title>
 </head>
 <body>
-    <div>
-  <header class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="/home">Home</a></li>
-        </ul>
-      </div>
-        <div class="navbar-right-container">
-            <meteor-include src="loginButtons"></meteor-include>
-        </div>
-    </div>
-  </header>
-  <div ui-view class="container-fluid"></div>
+    <div layout="column">
+      <md-toolbar layout="row">
+          <div> <a href="/home"> <md-button class="md-button">Home</md-button> </a> </div>
+          <div> <blaze-template name="loginButtons"></blaze-template> </div>
+      </md-toolbar>
+      <!-- be careful: nothing between md-toolbar and md-content -->
+      <md-content flex>
+            <div ui-view></div>
+      </md-content>
 </div>
 </body>
