@@ -4,7 +4,6 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
       var events = $meteor.collection(Events);
 
       //$scope.owner = $rootScope.currentUser._id;
-      $scope.owner = $rootScope.currentUser._id;
       $scope.eventName = "";
 
       $scope.beerName = "";
@@ -30,20 +29,19 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
       }
 
     $scope.addNewEvent = function () {
-        /*
-        var newEvent = {
-            "name": $scope.eventName,
-            "owner": $scope.owner,
+        var e = {
+            "name": "",
+            "owner": "",
             "started": false,
-            "beerList": $scope.beerList
+            "beerList": {}
         }
-        */
-        var e;
-        e.owner = $scope.owner;
+        e.owner = $rootScope.currentUser._id;
         e.name = $scope.eventName;
         e.started = false;
         e.beerList = $scope.beerList;
         events.push(e);
+        console.log("created a new event, event object:");
+        console.log(e);
         $mdDialog.hide();
     }
     $scope.removeFromList = function(name) {
@@ -53,8 +51,9 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
             }
         }
     }
+
     var init = function() {
-        console.log($rootScope.currentUser._id);
+        //console.log($rootScope.currentUser._id);
     }
     init();
 }]);
