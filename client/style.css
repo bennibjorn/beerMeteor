@@ -1,14 +1,23 @@
+.homeDiv {
+    border: 2px solid white;
+}
+.loginThings {
+    border: 2px solid white;
+    margin-left: 1em;
+    padding: 1.2em;
+}
 .gradeInputDiv {
     text-align: center;
 }
-.gradeInput {
-
-}
-.gradeText {
-
+.createNewBtn {
+    text-align: center;
+    margin-top: 2em;
 }
 .submitBtnDiv {
     text-align: center;
+}
+.eventListDiv {
+    margin-top: 2em;
 }
 .eventList {
     height: 2em;

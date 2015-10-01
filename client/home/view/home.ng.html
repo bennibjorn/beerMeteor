@@ -1,9 +1,9 @@
 <!-- Sidebar on the left, top and middle content -->
-<div class="col-md-2">
+<div class="col-md-2 createNewBtn">
     <md-button class="md-button md-raised" ng-click="openAddNewEventModal()">Create new event</md-button>
 </div>
 
-<div class="col-md-10">
+<div class="col-md-10 eventListDiv">
     <md-list>
         <md-list-item ng-repeat="e in events" class="eventList">
             <a href="/beerTasting/{{e._id}}">

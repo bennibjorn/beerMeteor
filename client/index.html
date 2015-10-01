@@ -4,10 +4,10 @@
 </head>
 <body>
     <div layout="column">
-      <md-toolbar layout="row">
-          <div> <a href="/home"> <md-button class="md-button">Home</md-button> </a> </div>
-          <div> <blaze-template name="loginButtons"></blaze-template> </div>
-      </md-toolbar>
+      <header layout="row">
+          <div class="homeDiv"> <a href="/home"> <md-button class="md-button">Home</md-button> </a> </div>
+          <div class="loginThings"> <blaze-template name="loginButtons"></blaze-template> </div>
+      </header>
       <!-- be careful: nothing between md-toolbar and md-content -->
       <md-content flex>
             <div ui-view></div>
