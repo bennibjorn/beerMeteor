@@ -32,7 +32,8 @@
                 "id": 0,
                 "name": "bjorsmokkun benna",
                 "owner": "bennibjorn@hotmail.com",
-                "public": true
+                "public": true,
+                "started": false
             }
          ];
         for (var i = 0; i < events.length; i++)

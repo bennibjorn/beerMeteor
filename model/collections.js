@@ -11,13 +11,15 @@ Events = new Mongo.Collection("events");
 {
     "name": "bjorsmokkun benna",
     "owner": "bennibjorn@hotmail.com",
-    "public": false
+    "public": false,
+    "started": false;
 }
 */
 BeerRating = new Mongo.Collection("beerRating");
 /*
 {
     "user": "bennibjorn@hotmail.com",
+    "eventID": "jfkdsjfklsa",
     "beerNum": 0,
     "taste": 10,
     "smell": 10,
