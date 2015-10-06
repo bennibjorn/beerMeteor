@@ -26,17 +26,22 @@
       for (var i = 0; i < beers.length; i++)
         Beers.insert(beers[i]);
     }
-     if (Events.find().count() == 0) {
+     if (Events.find().count() === 0) {
          var events = [
             {
-                "id": 0,
                 "name": "bjorsmokkun benna",
                 "owner": "bennibjorn@hotmail.com",
                 "public": true,
-                "started": false
+                "started": false,
+                "beerList": {}
             }
          ];
-        for (var i = 0; i < events.length; i++)
-             Events.insert(events[i]);
+         var e = {
+             "beerNum": 1,
+             "beerName": "Kaldi"
+         };
+         events[0].beerList.push(e);
+        for (var u = 0; u < events.length; u++)
+             Events.insert(events[u]);
     }
   });
