@@ -1,8 +1,9 @@
-angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$meteor', '$stateParams',
-        function ($scope, $meteor, $stateParams) {
+angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$meteor', '$stateParams', '$rootScope',
+        function ($scope, $meteor, $stateParams, $rootScope) {
 
     $scope.eventObj = $meteor.object(Events, $stateParams.id);
-    $scope.beerRatings = $meteor.object(BeerRating, $stateParams.id);
+    //$scope.beerRatings = $meteor.object(BeerRating, $stateParams.id);
+    $scope.beerRatings = $meteor.collection(BeerRating).subscribe('beerRating');
 
     var beerNum = 1;
     $scope.tasteGrade = 0;
@@ -28,20 +29,26 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
             console.log("already rated all beers");
             return;
         }
-      var rating = (taste + smell + finish) / 3;
-      var beerGrade = {
+        var rating = (taste + smell + finish) / 3;
+        var beerGrade = {
+          'eventID': $stateParams.id,
+          'user': $rootScope.currentUser._id,
           'beerNum': beerNum,
           'taste': taste,
           'smell': smell,
           'finish': finish,
           'rating': rating
-      };
-      console.log("Pushing beer to beerList, beerNum: " + beerNum + ", taste: " + taste + ", smell: " + smell + ", finish: " + finish + ", rating: " + rating);
-      //$scope.beerList.save(beerGrade);
-      $scope.data[0][beerNum-1] = rating;
-      beerNum++;
+        };
+        console.log("Pushing beer to beerList, beerNum: " + beerNum + ", taste: " + taste + ", smell: " + smell + ", finish: " + finish + ", rating: " + rating);
+        console.log("At eventID: " + beerGrade.eventID + ", User: " + beerGrade.user);
+        //$scope.beerList.save(beerGrade);
+        $scope.data[0][beerNum-1] = rating;
+        $scope.beerRatings.save(beerGrade);
+        console.log($scope.beerRatings);
+        beerNum++;
         // disable button until next beer/round starts
     };
+    /*
     // removeAll for testing purposes
     window.removeAll = function() {
       $scope.beerList.remove();
@@ -53,6 +60,7 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
       //var listLength = $scope.beerList.size();
       //console.log("listLength: " + listLength);
     };
+    */
     var updateChart = function() {
         // get amount of beers
         // avoid duplicates, might have to clear data before this
@@ -60,6 +68,8 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
             console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + 0);
             $scope.labels.push($scope.beerList[i].beerNum);
             $scope.data[0].push(0);
+
+            // check for beerRatings already in system
         }
 
     };
@@ -69,6 +79,10 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         console.log("eventObj: ");
         console.log($scope.eventObj);
         console.log("beerList.length = " + $scope.beerList.length);
+        console.log("currentUser:");
+        console.log($rootScope.currentUser);
+        console.log("beerRatings:");
+        console.log($scope.beerRatings);
         updateChart();
     };
     init();
