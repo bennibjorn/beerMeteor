@@ -2,8 +2,6 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         function ($scope, $meteor, $stateParams, $rootScope) {
 
     $scope.eventObj = $meteor.object(Events, $stateParams.id);
-    //$scope.beerRatings = $meteor.object(BeerRating, $stateParams.id);
-    $scope.beerRatings = $meteor.collection(BeerRating).subscribe('beerRating');
 
     var beerNum = 1;
     $scope.tasteGrade = 0;
@@ -31,9 +29,7 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         }
         var rating = (taste + smell + finish) / 3;
         var beerGrade = {
-          'eventID': $stateParams.id,
           'user': $rootScope.currentUser._id,
-          'beerNum': beerNum,
           'taste': taste,
           'smell': smell,
           'finish': finish,
@@ -43,8 +39,8 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         console.log("At eventID: " + beerGrade.eventID + ", User: " + beerGrade.user);
         //$scope.beerList.save(beerGrade);
         $scope.data[0][beerNum-1] = rating;
-        $scope.beerRatings.save(beerGrade);
-        console.log($scope.beerRatings);
+        $scope.beerList[beerNum-1].beerRating.push(beerGrade);
+        console.log($scope.beerList);
         beerNum++;
         // disable button until next beer/round starts
     };
@@ -70,6 +66,13 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
             $scope.data[0].push(0);
 
             // check for beerRatings already in system
+            if ($scope.beerList[i].beerRating != null) {
+                console.log("beerRating =");
+                console.log($scope.beerList[i].beerRating);
+                if ($scope.labels[i] === $scope.beerList[i].beerNum) {
+                    // same beer, find this user's grade and add it
+                }
+            }
         }
 
     };
@@ -81,8 +84,6 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         console.log("beerList.length = " + $scope.beerList.length);
         console.log("currentUser:");
         console.log($rootScope.currentUser);
-        console.log("beerRatings:");
-        console.log($scope.beerRatings);
         updateChart();
     };
     init();

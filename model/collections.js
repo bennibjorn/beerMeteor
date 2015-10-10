@@ -1,32 +1,23 @@
-Beers = new Mongo.Collection("beers");
-/*
-{
-    "beerNum": 0,
-    "beerName": "Kaldi Dökkur",
-    "eventName: "bjorsmokkun benna"
-}
-*/
 Events = new Mongo.Collection("events");
 /*
 {
     "name": "bjorsmokkun benna",
     "owner": "bennibjorn@hotmail.com",
-    "public": false,
-    "started": false;
+    "started": false,
+    "beerList": {
+            "beerName": "Kaldi Dokkur",
+            "beerNum": 0
+            "beerRating": {
+                "user": "bennibjorn@hotmail.com",
+                "taste": 10,
+                "smell": 10,
+                "finish": 10,
+                "rating": 10
+            }
+        }
 }
 */
-BeerRating = new Mongo.Collection("beerRating");
-/*
-{
-    "user": "bennibjorn@hotmail.com",
-    "eventID": "jfkdsjfklsa",
-    "beerNum": 0,
-    "taste": 10,
-    "smell": 10,
-    "finish": 10,
-    "rating": 10
-}
-*/
+
 
 Events.allow({
   insert: function (userId, event) {
