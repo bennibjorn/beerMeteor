@@ -14,7 +14,7 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
           var beerEntry = {
               "beerNum": beerNum,
               "beerName": $scope.beerName,
-              "beerRating": {}
+              "beerRating": []
           }
           for (var i = 0; i < $scope.beerList.length; i++) {
               if ($scope.beerList[i].beerName == $scope.beerName || $scope.beerName == "") {
