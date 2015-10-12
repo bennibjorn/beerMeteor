@@ -5,8 +5,8 @@ Events = new Mongo.Collection("events");
     "owner": "bennibjorn@hotmail.com",
     "started": false,
     "beerList": {
+            "beerNum": 0,
             "beerName": "Kaldi Dokkur",
-            "beerNum": 0
             "beerRating": {
                 "user": "bennibjorn@hotmail.com",
                 "taste": 10,
