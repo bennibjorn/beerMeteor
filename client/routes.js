@@ -14,6 +14,16 @@ function($urlRouterProvider, $stateProvider, $locationProvider){
           }]
         }
     })
+    .state('beerTastingTV', {
+      url: '/beerTasting/:id/TV',
+      templateUrl: 'client/TV/view/beerTastingTV.ng.html',
+      controller: 'BeerTastingTVController',
+      resolve: {
+          "currentUser": ["$meteor", function($meteor){
+            return $meteor.requireUser();
+          }]
+        }
+    })
     .state('home', {
     	url: '/home',
     	templateUrl: 'client/home/view/home.ng.html',

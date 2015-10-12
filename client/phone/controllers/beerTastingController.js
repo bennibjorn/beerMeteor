@@ -1,5 +1,5 @@
-angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$meteor', '$stateParams', '$rootScope',
-        function ($scope, $meteor, $stateParams, $rootScope) {
+angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$meteor', '$stateParams', '$rootScope', '$location',
+        function ($scope, $meteor, $stateParams, $rootScope, $location) {
 
     $scope.eventObj = $meteor.object(Events, $stateParams.id);
 
@@ -83,12 +83,17 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         return null;
     }
 
+    $scope.openTV = function() {
+        $location.path("/beerTasting/" + $stateParams.id + "/TV");
+    }
+
     var init = function() {
         console.log("init");
         console.log("eventObj: ");
         console.log($scope.eventObj);
         console.log("currentUser:");
         console.log($rootScope.currentUser);
+        console.log($stateParams);
         updateChart();
     };
     init();
