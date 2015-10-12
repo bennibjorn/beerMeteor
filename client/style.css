@@ -43,3 +43,8 @@ md-slider .md-track-container {
     padding-left: 5em;
     padding-right: 5em;
 }
+.beerNum {
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 1em;
+}

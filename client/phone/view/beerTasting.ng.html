@@ -1,15 +1,18 @@
-<div class="allInputs">
-    <div class="gradeInputDiv row">
+<div class="allInputs" layout="column">
+    <div class="beerNum">
+        <p class="gradeText"> Beer {{ beerNum }} </p>
+    </div>
+    <div class="gradeInputDiv">
         <md-slider class="gradeSlider" flex ng-model="smellGrade" step="1" min="1" max="10" aria-label="Smell"></md-slider>
         <p class="gradeText"> {{ smellGrade }} </p>
         <p class="gradeText">Smell</p>
     </div>
-    <div class="gradeInputDiv row">
+    <div class="gradeInputDiv">
         <md-slider class="gradeSlider" flex ng-model="tasteGrade" step="1" min="1" max="10" aria-label="Taste"></md-slider>
         <p class="gradeText"> {{ tasteGrade }} </p>
         <p class="gradeText">Taste</p>
     </div>
-    <div class="gradeInputDiv row">
+    <div class="gradeInputDiv">
         <md-slider class="gradeSlider" flex ng-model="finishGrade" step="1" min="1" max="10" aria-label="Finish"></md-slider>
         <p class="gradeText"> {{ finishGrade }} </p>
         <p class="gradeText">Finish</p>
@@ -17,9 +20,6 @@
     <div class="submitBtnDiv">
         <md-button class="md-button md-raised" ng-click="addBeer(tasteGrade, smellGrade, finishGrade)">Submit</md-button>
     </div>
-</div>
-<div class="favBeerDiv">
-
 </div>
 <div class="beerGradeHistory">
     <canvas id="beerGradeHistory" class="chart chart-bar" chart-data="data" chart-labels="labels"
