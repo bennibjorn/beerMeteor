@@ -3,13 +3,12 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
 
     $scope.eventObj = $meteor.object(Events, $stateParams.id);
 
-    var beerNum = 1;
+    $scope.beerNum = 1;
     $scope.tasteGrade = 0;
     $scope.smellGrade = 0;
     $scope.finishGrade = 0;
-    // beers sorted by best to worst
     $scope.beerList = $scope.eventObj.beerList;
-    //$scope.beerList = {};
+
     // labels and data for beer rating history chart
     $scope.labels = [];
     $scope.series = ['Beer rating'];
@@ -23,7 +22,7 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
             console.log("taste, smell and/or finish is not set");
             return;
         }
-        if (beerNum - 1 >= $scope.beerList.length) {
+        if ($scope.beerNum - 1 >= $scope.beerList.length) {
             console.log("already rated all beers");
             return;
         }
@@ -35,53 +34,59 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
           'finish': finish,
           'rating': rating
         };
-        console.log("Pushing beer to beerList, beerNum: " + beerNum + ", taste: " + taste + ", smell: " + smell + ", finish: " + finish + ", rating: " + rating);
-        console.log("At eventID: " + beerGrade.eventID + ", User: " + beerGrade.user);
-        //$scope.beerList.save(beerGrade);
-        $scope.data[0][beerNum-1] = rating;
-        $scope.beerList[beerNum-1].beerRating.push(beerGrade);
-        console.log($scope.beerList);
-        beerNum++;
-        // disable button until next beer/round starts
+        $scope.data[0][$scope.beerNum-1] = rating;
+        $scope.beerList[$scope.beerNum-1].beerRating.push(beerGrade);
+
+        // increment beerNum and reset all grades to 0
+        $scope.beerNum++;
+        $scope.tasteGrade = 0;
+        $scope.smellGrade = 0;
+        $scope.finishGrade = 0;
+        // TODO: disable button until next beer/round starts
     };
-    /*
-    // removeAll for testing purposes
-    window.removeAll = function() {
-      $scope.beerList.remove();
-    };
-    // to sort the beers from best to worst,
-    //should be called after all beers have been rated for results
-    var sortBeers = function() {
-      console.log("sortBeers called");
-      //var listLength = $scope.beerList.size();
-      //console.log("listLength: " + listLength);
-    };
-    */
     var updateChart = function() {
         // get amount of beers
         // avoid duplicates, might have to clear data before this
         for (var i = 0; i < $scope.beerList.length; i++) {
-            console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + 0);
             $scope.labels.push($scope.beerList[i].beerNum);
-            $scope.data[0].push(0);
-
+            // stopChecking is used to reduce checks
+            // if a beer hasn't been rated, we can be sure that the beer after that has also not been rated
+            var stopChecking = false;
+            var r;
             // check for beerRatings already in system
-            if ($scope.beerList[i].beerRating != null) {
-                console.log("beerRating =");
-                console.log($scope.beerList[i].beerRating);
-                if ($scope.labels[i] === $scope.beerList[i].beerNum) {
-                    // same beer, find this user's grade and add it
-                }
+            if (stopChecking) {
+                r = null;
+            } else {
+                r = findRating($scope.beerList[i].beerNum)
+            }
+            if (r != null) {
+                $scope.data[0].push(r);
+                // increment beerNum if already rated
+                $scope.beerNum++;
+                console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + r);
+            } else {
+                // else put rating as 0 and keep beerNum the same
+                $scope.data[0].push(0);
+                console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + 0);
+                stopChecking = true;
             }
         }
 
     };
 
+    var findRating = function(beerNum) {
+        for (var i = 0; i < $scope.beerList[beerNum-1].beerRating.length; i++) {
+            if ($scope.beerList[beerNum-1].beerRating[i].user === $rootScope.currentUser._id) {
+                return $scope.beerList[beerNum-1].beerRating[i].rating;
+            }
+        }
+        return null;
+    }
+
     var init = function() {
         console.log("init");
         console.log("eventObj: ");
         console.log($scope.eventObj);
-        console.log("beerList.length = " + $scope.beerList.length);
         console.log("currentUser:");
         console.log($rootScope.currentUser);
         updateChart();
