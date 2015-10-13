@@ -1,6 +1,6 @@
 angular.module('beerMeteor').controller('HomeController', ['$scope', '$meteor', '$mdDialog',
     function ($scope, $meteor, $mdDialog) {
-    
+
     $scope.events = $meteor.collection(Events);
 
     $scope.openAddNewEventModal = function () {
@@ -11,6 +11,10 @@ angular.module('beerMeteor').controller('HomeController', ['$scope', '$meteor', 
             clickOutsideToClose:true
       });
     };
+
+    $scope.removeEvent = function(id) {
+        $scope.events.remove({_id: id});
+    }
 
     var init = function() {
         console.log("init");

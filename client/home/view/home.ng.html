@@ -1,9 +1,9 @@
 <!-- Sidebar on the left, top and middle content -->
-<div class="col-md-2 createNewBtn">
+<div class="createNewBtn">
     <md-button class="md-button md-raised" ng-click="openAddNewEventModal()">Create new event</md-button>
 </div>
 
-<div class="col-md-10 eventListDiv">
+<div class="eventListDiv">
     <md-list>
         <md-list-item ng-repeat="e in events" class="eventList">
             <a href="/beerTasting/{{e._id}}">
@@ -11,6 +11,7 @@
                     <p> {{ e.name }} </p>
                 </div>
             </a>
+            <md-button ng-show="currentUser._id === e.owner" class="md-button" ng-click="removeEvent(e._id)">X</md-button>
         </md-list-item>
     </md-list>
 </div>

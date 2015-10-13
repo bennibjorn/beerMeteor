@@ -17,14 +17,18 @@
     text-align: center;
 }
 .eventListDiv {
-    margin-top: 2em;
+    margin: 1em;
 }
 .eventList {
+    display: flex;
+    justify-content: space-between;
+    justify-content: -webkit-space-between;
     height: 2em;
     border: 1px solid #cccccc;
     text-align: center;
     font-size: 1.3em;
     margin-bottom: 1em;
+    padding-left: 1em;
     box-shadow: 5px 5px 30px -10px rgba(0,0,0,0.75);
 }
 .middleText {
