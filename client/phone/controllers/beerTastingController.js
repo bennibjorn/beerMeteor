@@ -8,6 +8,7 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
     $scope.smellGrade = 0;
     $scope.finishGrade = 0;
     $scope.beerList = $scope.eventObj.beerList;
+    $scope.submitDisabled = false;
 
     // labels and data for beer rating history chart
     $scope.labels = [];
@@ -18,6 +19,12 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
 
     // adds the rating of the beer to the list
     $scope.addBeer = function(taste, smell, finish) {
+        /*
+        if (!$scope.eventObj.started) {
+            console.log("Event not started/already over");
+            return;
+        }
+        */
         if (taste === 0 || smell === 0 || finish === 0) {
             console.log("taste, smell and/or finish is not set");
             return;
@@ -34,17 +41,21 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
           'finish': finish,
           'rating': rating
         };
-        $scope.data[0][$scope.beerNum-1] = rating;
+        //$scope.data[0][$scope.beerNum-1] = rating;
         $scope.beerList[$scope.beerNum-1].beerRating.push(beerGrade);
-
+        console.log($scope.beerList[$scope.beerNum-1]);
         // increment beerNum and reset all grades to 0
         $scope.beerNum++;
         $scope.tasteGrade = 0;
         $scope.smellGrade = 0;
         $scope.finishGrade = 0;
+        updateChart();
+        console.log("eventObj");
+        console.log($scope.eventObj);
+        //$scope.submitDisabled = true;
         // TODO: disable button until next beer/round starts
     };
-    var updateChart = function() {
+    var initializeChart = function() {
         // get amount of beers
         // avoid duplicates, might have to clear data before this
         for (var i = 0; i < $scope.beerList.length; i++) {
@@ -60,18 +71,35 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
                 r = findRating($scope.beerList[i].beerNum)
             }
             if (r != null) {
-                $scope.data[0].push(r);
-                // increment beerNum if already rated
-                $scope.beerNum++;
-                console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + r);
+                // check if length of data is equal to beerList length
+                if ($scope.data[0][i] != 0) {
+                    $scope.data[0][i] = r;
+                } else {
+                    $scope.data[0].push(r);
+                }
+                    // increment beerNum if already rated
+                    $scope.beerNum++;
+                    //console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + r);
             } else {
                 // else put rating as 0 and keep beerNum the same
-                $scope.data[0].push(0);
-                console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + 0);
+                if ($scope.data[0][i] != 0) {
+                    $scope.data[0][i] = 0;
+                } else {
+                    $scope.data[0].push(0);
+                }
+                //console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + 0);
                 stopChecking = true;
             }
         }
 
+    };
+    var updateChart = function() {
+        for(var i = 0; i < $scope.beerList.length; i++) {
+            var r = findRating(i+1);
+            if (r != null) {
+                $scope.data[0][i] = r;
+            }
+        }
     };
 
     var findRating = function(beerNum) {
@@ -81,11 +109,14 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
             }
         }
         return null;
-    }
+    };
 
     $scope.openTV = function() {
         $location.path("/beerTasting/" + $stateParams.id + "/TV");
-    }
+    };
+    $scope.adminView = function() {
+
+    };
 
     var init = function() {
         console.log("init");
@@ -93,8 +124,9 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         console.log($scope.eventObj);
         console.log("currentUser:");
         console.log($rootScope.currentUser);
-        console.log($stateParams);
-        updateChart();
+        console.log("beerList");
+        console.log($scope.beerList);
+        initializeChart();
     };
     init();
 }]);

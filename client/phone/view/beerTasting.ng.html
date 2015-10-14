@@ -20,7 +20,7 @@
         <p class="gradeText">Finish</p>
     </div>
     <div class="submitBtnDiv">
-        <md-button class="md-button md-raised" ng-click="addBeer(tasteGrade, smellGrade, finishGrade)">Submit</md-button>
+        <md-button class="md-button md-raised" ng-disabled="submitEnabled" ng-click="addBeer(tasteGrade, smellGrade, finishGrade)">Submit</md-button>
     </div>
 </div>
 <div class="beerGradeHistory">
