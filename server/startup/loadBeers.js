@@ -27,4 +27,10 @@
              Events.insert(events[u]);
          }
         */
+        Meteor.publish("events", function(){
+            return Events.find();
+        });
+        Meteor.publish("event-ratings", function(eventID){
+            return Events.find({"_id": eventID});
+        });
 });
