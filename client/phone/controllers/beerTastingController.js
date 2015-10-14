@@ -1,13 +1,14 @@
 angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$meteor', '$stateParams', '$rootScope', '$location',
         function ($scope, $meteor, $stateParams, $rootScope, $location) {
 
-    $scope.eventObj = $meteor.object(Events, $stateParams.id);
-
+    //$scope.eventObj = $meteor.object(Events, $stateParams.id);
+    $scope.eventObj = $meteor.collection(Events).subscribe("event-ratings", $stateParams.id);
+    $scope.eventObj = $scope.eventObj;
     $scope.beerNum = 1;
     $scope.tasteGrade = 0;
     $scope.smellGrade = 0;
     $scope.finishGrade = 0;
-    $scope.beerList = $scope.eventObj.beerList;
+    $scope.beerList = $scope.eventObj[0].beerList;
     $scope.submitDisabled = false;
 
     // labels and data for beer rating history chart
@@ -16,7 +17,13 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
     $scope.data = [
         []
     ];
-
+/*
+    $scope.$meteorSubscribe('event-ratings', $stateParams.id).then(function(){
+        $scope.eventObj = $meteor.collection(Events);
+        console.log($scope.eventObj);
+        initializeChart();
+    });
+*/
     // adds the rating of the beer to the list
     $scope.addBeer = function(taste, smell, finish) {
         /*
@@ -50,8 +57,6 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         $scope.smellGrade = 0;
         $scope.finishGrade = 0;
         updateChart();
-        console.log("eventObj");
-        console.log($scope.eventObj);
         //$scope.submitDisabled = true;
         // TODO: disable button until next beer/round starts
     };
@@ -120,12 +125,9 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
 
     var init = function() {
         console.log("init");
-        console.log("eventObj: ");
-        console.log($scope.eventObj);
         console.log("currentUser:");
         console.log($rootScope.currentUser);
-        console.log("beerList");
-        console.log($scope.beerList);
+        console.log($scope.eventObj);
         initializeChart();
     };
     init();
