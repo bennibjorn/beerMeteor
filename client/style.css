@@ -58,3 +58,7 @@ md-slider .md-track-container {
 .adminListingText {
     margin-left: 1em;
 }
+.createEventBeerList {
+    margin-right: 1em;
+    border-bottom: 1px solid #ccc;
+}

@@ -21,11 +21,11 @@
             <button class="btn btn-success" ng-click="addBeerToList()">Add</button>
         </div>
     </form>
-    <ul class="beerList" ng-show="$root.currentUser || $root.loggingIn">
+    <md-list class="beerList" ng-show="$root.currentUser || $root.loggingIn">
         <p class="middleText"> Beers to taste: </p>
-        <li ng-repeat="b in beerList">
-            <div class="col-xs-11"> <p class="middleText"> {{ b.beerName }} </p> </div>
-            <div class="col-xs-1"> <button class="btn btn-danger" ng-click="removeFromList(b.name)">X</button> </div>
-        </li>
-    </ul>
+        <md-list-item ng-repeat="b in beerList" layout="row">
+            <div class="createEventBeerList"> <p> {{ b.beerName }} </p> </div>
+            <div class=""> <button class="btn btn-danger" ng-click="removeFromList(b.beerName)">X</button> </div>
+        </md-list-item>
+    </md-list>
 </div>
