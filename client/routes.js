@@ -24,6 +24,16 @@ function($urlRouterProvider, $stateProvider, $locationProvider){
           }]
         }
     })
+    .state('adminView', {
+      url: '/beerTasting/:id/admin',
+      templateUrl: 'client/phone/view/adminView.ng.html',
+      controller: 'AdminController',
+      resolve: {
+          "currentUser": ["$meteor", function($meteor){
+            return $meteor.requireUser();
+          }]
+        }
+    })
     .state('home', {
     	url: '/home',
     	templateUrl: 'client/home/view/home.ng.html',

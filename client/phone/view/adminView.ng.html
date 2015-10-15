@@ -1,0 +1,16 @@
+<div class="createNewBtn">
+    <md-button class="md-button md-raised" ng-click="startEvent()">Start Event</md-button>
+    <md-button class="md-button md-raised" ng-click="stopEvent()">Stop Event</md-button>
+</div>
+<div layout="column" class="eventListDiv">
+    <md-list-item ng-repeat="b in beerList" class="eventList">
+        <div class="md-list-item-text" layout="row">
+            <div class="adminListingText"> BeerName: {{ b.beerName }} </div>
+            <div class="adminListingText"> BeerNum: {{ b.beerNum }} </div>
+        </div>
+        <div ng-repeat="br in beerList.beerRating">
+            <div class="adminListingText"> {{ br.user }} </div>
+            <md-button class="md-button" ng-click="removeRating(br._id)">Remove rating</md-button>
+        </div>
+    </md-list-item>
+</div>
