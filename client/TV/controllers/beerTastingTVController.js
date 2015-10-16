@@ -1,11 +1,25 @@
 angular.module('beerMeteor').controller('BeerTastingTVController', ['$scope', '$meteor', '$stateParams', '$rootScope', '$location',
         function ($scope, $meteor, $stateParams, $rootScope, $location) {
 
-    $scope.eventObj = $meteor.object(Events, $stateParams.id);
+    $scope.eventObj = $meteor.collection(Events).subscribe("event-ratings", $stateParams.id);
+
+    $scope.eventObj = $meteor.collection(function() {
+        return Events.find({"_id": $stateParams.id}, {
+            eventObj : $scope.getReactively('eventObj')     // Every time $scope.sort will change, the reactive function will re-run again
+        });
+    });
+    $meteor.autorun($scope, function() {
+      $meteor.subscribe('event-ratings', $stateParams.id, {
+        eventObj: $scope.getReactively('eventObj')
+      }).then(function() {
+        console.log('new beerRatings in page - ');
+        console.log($scope.beerRatings);
+      });
+    });
 
     $scope.beerNum = 1;
-    $scope.beerList = $scope.eventObj.beerList;
-
+    $scope.beerList = $scope.eventObj[0].beerList;
+    $scope.beerRatings = $scope.eventObj[0].beerRatings;
     // current beer ratings
     $scope.currBeerTaste = 0;
     $scope.currBeerSmell = 0;
@@ -24,73 +38,41 @@ angular.module('beerMeteor').controller('BeerTastingTVController', ['$scope', '$
         [$scope.currBeerTaste, $scope.currBeerSmell, $scope.currBeerFinish]
     ];
 
-    var updateChart = function() {
-        // get amount of beers
-        // avoid duplicates, might have to clear data before this
-        for (var i = 0; i < $scope.beerList.length; i++) {
-            $scope.labels.push($scope.beerList[i].beerNum);
-            // stopChecking is used to reduce checks
-            // if a beer hasn't been rated, we can be sure that the beer after that has also not been rated
-            var stopChecking = false;
-            var r;
-            // check for beerRatings already in system
-            if (stopChecking) {
-                r = null;
-            } else {
-                r = findRating($scope.beerList[i].beerNum)
-            }
-            if (r != null) {
-                $scope.data[0].push(r);
-                // increment beerNum if already rated
-                $scope.beerNum++;
-                console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + r);
-            } else {
-                // else put rating as 0 and keep beerNum the same
-                $scope.data[0].push(0);
-                console.log("pushing beerNum: " + $scope.beerList[i].beerNum + ", and rating: " + 0);
-                stopChecking = true;
-            }
-        }
-
-    };
-    var initializeBeersChart = function() {
-        for (var i = 0; i < $scope.beerList.length; i++) {
-
-        }
-    };
-
-
-    var findCombinedRating = function(beerNum) {
+    var findBeerRatings = function(beerNum) {
         var sum = 0;
-        for (var i = 0; i < $scope.beerList[beerNum-1].beerRating.length; i++) {
-                sum += $scope.beerList[beerNum-1].beerRating[i].rating;
+        for (var i = 0; i < $scope.beerRatings.length; i++) {
+            if ($scope.beerRatings[i].beerNum === beerNum) {
+                sum += $scope.beerRatings[i].rating;
+            }
         }
         return sum;
     };
-    var findBeerRating = function(beerNum) {
+    var findCurrBeerRatings = function(beerNum) {
         var taste = 0, smell = 0, finish = 0;
-        var length = $scope.beerList[beerNum-1].beerRating.length;
-        for (var i = 0; i < length; i++) {
-            taste += $scope.beerList[beerNum-1].beerRating[i].taste;
-            smell += $scope.beerList[beerNum-1].beerRating[i].smell;
-            finish += $scope.beerList[beerNum-1].beerRating[i].finish;
+        for (var i = 0; i < $scope.beerRatings.length; i++) {
+            if (var br = $scope.beerRatings[i].beerNum === beerNum) {
+                taste += br.taste;
+                smell += br.smell;
+                finish += br.finish;
+            }
         }
-        return {
-            "taste": (taste / length),
-            "smell": (smell / length),
-            "finish": (finish / length)
+        var current = {
+            "taste": taste,
+            "smell": smell,
+            "finish": finish
         };
+        return current;
     };
 
     $scope.openMobile = function() {
         $location.path("/beerTasting/" + $stateParams.id);
-    }
+    };
 
     var init = function() {
         console.log("init");
         console.log("eventObj: ");
         console.log($scope.eventObj);
-        initializeChart();
+        //initializeChart();
     };
     init();
 }]);
