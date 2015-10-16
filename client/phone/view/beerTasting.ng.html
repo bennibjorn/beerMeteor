@@ -2,7 +2,7 @@
     <div class="beerNum">
         <md-button class="md-button" ng-click="openTV()">TV</md-button>
         <p class="gradeText"> Beer {{ beerNum }} </p>
-        <md-button ng-show="currentUser._id === eventObj.owner">Admin</md-button>
+        <md-button ng-show="currentUser._id === eventObj[0].owner" ng-click="adminView()">Admin</md-button>
     </div>
     <div class="gradeInputDiv">
         <md-slider class="gradeSlider" flex ng-model="smellGrade" step="1" min="1" max="10" aria-label="Smell"></md-slider>

@@ -3,13 +3,15 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
 
     //$scope.eventObj = $meteor.object(Events, $stateParams.id);
     $scope.eventObj = $meteor.collection(Events).subscribe("event-ratings", $stateParams.id);
-    $scope.eventObj = $scope.eventObj;
     $scope.beerNum = 1;
     $scope.tasteGrade = 0;
     $scope.smellGrade = 0;
     $scope.finishGrade = 0;
     $scope.beerList = $scope.eventObj[0].beerList;
+    $scope.beerRatings = $scope.eventObj[0].beerRatings;
     $scope.submitDisabled = false;
+
+    var myRatings = [];
 
     // labels and data for beer rating history chart
     $scope.labels = [];
@@ -24,10 +26,23 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         initializeChart();
     });
 */
+$scope.eventObj = $meteor.collection(function() {
+    return Events.find({"_id": $stateParams.id}, {
+        eventObj : $scope.getReactively('eventObj')     // Every time $scope.sort will change, the reactive function will re-run again
+    });
+});
+$meteor.autorun($scope, function() {
+  $meteor.subscribe('event-ratings', $stateParams.id, {
+    eventObj: $scope.getReactively('eventObj')
+  }).then(function() {
+    console.log('new beerRatings in page - ');
+    console.log($scope.beerRatings);
+  });
+});
     // adds the rating of the beer to the list
     $scope.addBeer = function(taste, smell, finish) {
         /*
-        if (!$scope.eventObj.started) {
+        if (!$scope.eventObj[0].started) {
             console.log("Event not started/already over");
             return;
         }
@@ -43,20 +58,31 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         var rating = (taste + smell + finish) / 3;
         var beerGrade = {
           'user': $rootScope.currentUser._id,
+          'beerNum': $scope.beerNum,
           'taste': taste,
           'smell': smell,
           'finish': finish,
           'rating': rating
         };
-        //$scope.data[0][$scope.beerNum-1] = rating;
-        $scope.beerList[$scope.beerNum-1].beerRating.push(beerGrade);
-        console.log($scope.beerList[$scope.beerNum-1]);
+        $scope.data[0][$scope.beerNum-1] = rating;
+        //$scope.beerList[$scope.beerNum-1].beerRating.push(beerGrade);
+
+        $meteor.call("rateBeer", $stateParams.id, beerGrade, function(error, result){
+            if(error){
+                console.log("error", error);
+            }
+            if(result){
+                console.log(result);
+                 updateChart();
+            }
+        });
+
         // increment beerNum and reset all grades to 0
         $scope.beerNum++;
         $scope.tasteGrade = 0;
         $scope.smellGrade = 0;
         $scope.finishGrade = 0;
-        updateChart();
+        //updateChart();
         //$scope.submitDisabled = true;
         // TODO: disable button until next beer/round starts
     };
@@ -107,10 +133,18 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         }
     };
 
+    var findMyRatings = function() {
+        for (var i = 0; i < $scope.beerRatings.length; i++) {
+            if ($scope.beerRatings[i].user === $rootScope.currentUser._id) {
+                myRatings.push($scope.beerRatings[i]);
+            }
+        }
+    }
+
     var findRating = function(beerNum) {
-        for (var i = 0; i < $scope.beerList[beerNum-1].beerRating.length; i++) {
-            if ($scope.beerList[beerNum-1].beerRating[i].user === $rootScope.currentUser._id) {
-                return $scope.beerList[beerNum-1].beerRating[i].rating;
+        for (var i = 0; i < myRatings.length; i++) {
+            if (myRatings[i].beerNum === $scope.beerNum) {
+                return myRatings[i].rating;
             }
         }
         return null;
@@ -120,7 +154,9 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         $location.path("/beerTasting/" + $stateParams.id + "/TV");
     };
     $scope.adminView = function() {
-
+        if ($rootScope.currentUser._id === $scope.eventObj[0].owner) {
+            $location.path('/beerTasting/' + $stateParams.id + '/admin');
+        }
     };
 
     var init = function() {
@@ -128,6 +164,7 @@ angular.module('beerMeteor').controller('BeerTastingController', ['$scope', '$me
         console.log("currentUser:");
         console.log($rootScope.currentUser);
         console.log($scope.eventObj);
+        findMyRatings();
         initializeChart();
     };
     init();

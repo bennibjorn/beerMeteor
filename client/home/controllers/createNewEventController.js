@@ -13,8 +13,8 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
       $scope.addBeerToList = function() {
           var beerEntry = {
               "beerNum": beerNum,
-              "beerName": $scope.beerName,
-              "beerRating": []
+              "beerName": $scope.beerName
+              //"beerRating": []
           }
           for (var i = 0; i < $scope.beerList.length; i++) {
               if ($scope.beerList[i].beerName == $scope.beerName || $scope.beerName == "") {
@@ -34,15 +34,25 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
             "name": "",
             "owner": "",
             "started": false,
-            "beerList": {}
+            "beerList": {},
+            "beerRatings": []
         }
         e.owner = $rootScope.currentUser._id;
         e.name = $scope.eventName;
         e.started = false;
         e.beerList = $scope.beerList;
         events.push(e);
-        console.log("created a new event, event object:");
-        console.log(e);
+        /*
+        $meteor.call("createEvent", e, function(error, result){
+            if(error){
+                console.log("error", error);
+            }
+            if(result){
+                console.log("created a new event, event object:");
+                console.log(e);
+            }
+        });
+        */
         $mdDialog.hide();
     }
     $scope.removeFromList = function(name) {

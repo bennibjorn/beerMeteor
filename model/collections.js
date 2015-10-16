@@ -30,3 +30,17 @@ Events.allow({
     return userId && event.owner === userId;
   }
 });
+
+Meteor.methods({
+    rateBeer: function (objId, beerGradeObj) {
+      //var modifier = {$inc: {}};
+      //modifier.$inc['beerList[' + beerNum + '].beerRating'] = beerGradeObj;
+      //Meteor.users.update({'_id': Meteor.userId()}, modifier);
+    Events.update({ _id:objId },
+        { $push: { beerRatings: beerGradeObj}}
+    );
+    return "beerRatings updated";
+      //$scope.beerList[$scope.beerNum-1].beerRating.push(beerGrade);
+  }
+
+});
