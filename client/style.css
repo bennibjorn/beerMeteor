@@ -20,9 +20,16 @@
     margin: 1em;
 }
 .eventList {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
-    justify-content: -webkit-space-between;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-justify-content: -webkit-space-between;
+            justify-content: -webkit-space-between;
     height: 2em;
     border: 1px solid #cccccc;
     text-align: center;
@@ -48,9 +55,13 @@ md-slider .md-track-container {
     padding-right: 5em;
 }
 .beerNum {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     -webkit-justify-content: flex-start;
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
     text-align: center;
     font-size: 1.5em;
     margin-top: 1em;

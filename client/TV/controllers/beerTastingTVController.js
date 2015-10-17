@@ -16,6 +16,11 @@ angular.module('beerMeteor').controller('BeerTastingTVController', ['$scope', '$
         console.log($scope.beerRatings);
       });
     });
+    Meteor.methods({
+        updateTVcharts: function () {
+            updateAllBeersChart();
+      }
+    });
 
     $scope.beerNum = 1;
     $scope.beerList = $scope.eventObj[0].beerList;
@@ -25,6 +30,7 @@ angular.module('beerMeteor').controller('BeerTastingTVController', ['$scope', '$
     $scope.currBeerSmell = 0;
     $scope.currBeerFinish = 0;
 
+    var participants = [];
     // labels and data for beer rating history chart
     $scope.allBeersLabels = [];
     $scope.allBeersSeries = ['Beer rating'];
@@ -45,23 +51,42 @@ angular.module('beerMeteor').controller('BeerTastingTVController', ['$scope', '$
                 sum += $scope.beerRatings[i].rating;
             }
         }
-        return sum;
+        return sum / 2;
     };
     var findCurrBeerRatings = function(beerNum) {
         var taste = 0, smell = 0, finish = 0;
         for (var i = 0; i < $scope.beerRatings.length; i++) {
-            if (var br = $scope.beerRatings[i].beerNum === beerNum) {
-                taste += br.taste;
-                smell += br.smell;
-                finish += br.finish;
+            if ($scope.beerRatings[i].beerNum === beerNum) {
+                $scope.currBeerTaste += $scope.beerRatings[i].taste;
+                $scope.currBeerSmell += $scope.beerRatings[i].smell;
+                $scope.currBeerFinish += $scope.beerRatings[i].finish;
             }
         }
-        var current = {
-            "taste": taste,
-            "smell": smell,
-            "finish": finish
-        };
-        return current;
+    };
+    var updateAllBeersChart = function() {
+        for (var i = 0; i < $scope.beerList.length; i++) {
+            $scope.allBeersLabels[i] = $scope.beerList[i].beerNum;
+            $scope.allBeersData[0][i] = findBeerRatings($scope.beerList[i].beerNum);
+        }
+    };
+    var initializeCurrBeersChart = function() {
+        findCurrBeerRatings($scope.beerNum);
+    };
+    var getParticipants = function() {
+        for (var i = 0; i < $scope.beerRatings.length; i++) {
+            for (var u = 0; u < participants.length; u++) {
+                if (participants[u] === $scope.beerRatngs[i].user) {
+                    // if user is found in participants, break the loop and check next
+                    break;
+                } else if (u == participants.length - 1) {
+                    // reached the end of the array, add user if not found by now
+                    participants.push($scope.beerRatings[i].user);
+                    console.log(participants);
+                }
+            }
+        }
+        console.log("participants length = " + participants.length);
+        return participants.length;
     };
 
     $scope.openMobile = function() {
@@ -72,7 +97,13 @@ angular.module('beerMeteor').controller('BeerTastingTVController', ['$scope', '$
         console.log("init");
         console.log("eventObj: ");
         console.log($scope.eventObj);
-        //initializeChart();
+        // initialize allBeers chart
+        updateAllBeersChart();
+        // initialize currBeer chart
+        initializeCurrBeersChart();
+        getParticipants();
     };
     init();
+
+
 }]);
