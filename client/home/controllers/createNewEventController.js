@@ -7,13 +7,15 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
       $scope.eventName = "";
 
       $scope.beerName = "";
+      $scope.beerDesc = "";
       $scope.beerList = [];
       var beerNum = 1;
 
       $scope.addBeerToList = function() {
           var beerEntry = {
               "beerNum": beerNum,
-              "beerName": $scope.beerName
+              "beerName": $scope.beerName,
+              "beerDesc": $scope.beerDesc
               //"beerRating": []
           }
           for (var i = 0; i < $scope.beerList.length; i++) {
@@ -27,7 +29,7 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
           // and clear name
           $scope.beerName = "";
           beerNum++;
-      }
+      };
 
     $scope.addNewEvent = function () {
         var e = {
@@ -36,7 +38,7 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
             "started": false,
             "beerList": {},
             "beerRatings": []
-        }
+        };
         e.owner = $rootScope.currentUser._id;
         e.name = $scope.eventName;
         e.started = false;
@@ -54,17 +56,28 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
         });
         */
         $mdDialog.hide();
-    }
+    };
     $scope.removeFromList = function(name) {
         for (var i = 0; i < $scope.beerList.length; i++) {
             if ($scope.beerList[i].beerName == name) {
                 $scope.beerList.splice(i, 1);
+                sort();
+                return;
             }
         }
-    }
+    };
+
+    var sort = function() {
+        for (var i = 1; i < $scope.beerList.length; i++) {
+            if ($scope.beerList[i].beerNum != ($scope.beerList[i-1].beerNum + 1)) {
+                $scope.beerList[i].beerNum = $scope.beerList[i-1].beerNum + 1;
+            }
+        }
+        beerNum = $scope.beerList[$scope.beerList.length-1].beerNum + 1;
+    };
 
     var init = function() {
         //console.log($rootScope.currentUser._id);
-    }
+    };
     init();
 }]);
