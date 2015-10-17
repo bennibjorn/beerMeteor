@@ -1,22 +1,24 @@
 TODO
 
 Create
-	Anonymous beers (beer 1, beer 2) with a reveal at the end or revealed from the start (Kaldi, Einstok) 
+	Anonymous beers (beer 1, beer 2) with a reveal at the end or revealed from the start (Kaldi, Einstok)
         so maybe add a "anonymous" attribute
 
+	Also add a "description" attribute which will be shown on the TV
+
 Room
-    Subscribe to the correct event (_id) and fill the chart of relevant information
 
 	If the user is the owner of the room, be able to select if he wants to be the TV, admin or regular user
-    
-    Regular user: 
+
+    Regular user:
         should not be able to press submit if the event is not started (by setting "started" attribute on event to true) or if he has already submitted a grade for the current beer
         When he submits, add grade to history chart and publish for TV
 
     TV:
 	   TV sees the rating the current beer is getting, crowd favorite/least favorite and the rating history for all beers
-       subscribe to the ratings db
+       figure out how to resize charts
+	   show the description of the current beer
 
-	Admin: 
-        sees all users in the room, can kick users and force the next beer before all have voted
-
+	Admin:
+        can control the flow of the game, sends "next round" to all clients
+		until the next round is sent, users can only vote on one beer at a time
