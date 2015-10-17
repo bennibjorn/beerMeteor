@@ -16,14 +16,24 @@ angular.module('beerMeteor').controller('BeerTastingTVController', ['$scope', '$
         console.log($scope.beerRatings);
       });
     });
+
+    Meteor.autosubscribe(function() {
+        Events.find().observe({
+            changed: function() {
+                updateAllBeersChart();
+            }
+        });
+    });
+    /*
     Meteor.methods({
         updateTVcharts: function () {
             updateAllBeersChart();
       }
     });
-
+*/
     $scope.beerNum = 1;
     $scope.beerList = $scope.eventObj[0].beerList;
+    $scope.beerDesc = $scope.beerList[$scope.beerNum-1].beerDesc;
     $scope.beerRatings = $scope.eventObj[0].beerRatings;
     // current beer ratings
     $scope.currBeerTaste = 0;
@@ -51,7 +61,7 @@ angular.module('beerMeteor').controller('BeerTastingTVController', ['$scope', '$
                 sum += $scope.beerRatings[i].rating;
             }
         }
-        return sum / 2;
+        return sum / getParticipants();
     };
     var findCurrBeerRatings = function(beerNum) {
         var taste = 0, smell = 0, finish = 0;
@@ -74,23 +84,24 @@ angular.module('beerMeteor').controller('BeerTastingTVController', ['$scope', '$
     };
     var getParticipants = function() {
         for (var i = 0; i < $scope.beerRatings.length; i++) {
-            for (var u = 0; u < participants.length; u++) {
-                if (participants[u] === $scope.beerRatngs[i].user) {
-                    // if user is found in participants, break the loop and check next
-                    break;
-                } else if (u == participants.length - 1) {
-                    // reached the end of the array, add user if not found by now
-                    participants.push($scope.beerRatings[i].user);
-                    console.log(participants);
-                }
+            if (participants.indexOf($scope.beerRatings[i].user) === -1) {
+                participants.push($scope.beerRatings[i].user);
             }
         }
-        console.log("participants length = " + participants.length);
+        console.log("participants: ");
+        console.log(participants);
         return participants.length;
     };
 
     $scope.openMobile = function() {
         $location.path("/beerTasting/" + $stateParams.id);
+    };
+
+    $scope.nextbeer = function() {
+        if ($scope.beerNum === $scope.beerList.length) {
+            return;
+        }
+        $scope.beerNum++;
     };
 
     var init = function() {

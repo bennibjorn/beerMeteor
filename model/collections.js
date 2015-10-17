@@ -39,14 +39,6 @@ Meteor.methods({
     Events.update({ _id:objId },
         { $push: { beerRatings: beerGradeObj}}
     );
-    Meteor.call("updateTVcharts", function(error, result){
-        if(error){
-            console.log("error", error);
-        }
-        if(result){
-             console.log("result", result);
-        }
-    });
     return "beerRatings updated";
       //$scope.beerList[$scope.beerNum-1].beerRating.push(beerGrade);
   }

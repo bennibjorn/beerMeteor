@@ -3,22 +3,25 @@ angular.module('beerMeteor').controller('AdminController', ['$scope', '$meteor',
 
     //$scope.eventObj = $meteor.object(Events, $stateParams.id);
     $scope.eventObj = $meteor.collection(Events).subscribe("event-ratings", $stateParams.id);
-    $scope.beerNum = 1;
     $scope.beerList = $scope.eventObj[0].beerList;
+    $scope.currBeerNum = $scope.eventObj[0].currentBeer;
+    $scope.currBeerName = $scope.beerList[$scope.currBeerNum - 1].beerName;
 
     $scope.startEvent = function() {
         $scope.eventObj[0].started = true;
-    }
+    };
 
     $scope.stopEvent = function() {
         $scope.eventObj[0].started = false;
-    }
-
-    $scope.openTV = function() {
-        $location.path("/beerTasting/" + $stateParams.id + "/TV");
     };
+
     $scope.normalView = function() {
-        $location.path('/beerTasting/' + $stateParams.id + '/admin');
+        $location.path('/beerTasting/' + $stateParams.id);
+    };
+
+    $scope.nextBeer = function() {
+        $scope.eventObj[0].currentBeer = $scope.eventObj[0].currentBeer + 1;
+        console.log($scope.eventObj);
     };
 
     var init = function() {

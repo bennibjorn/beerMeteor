@@ -1,6 +1,12 @@
+<!--
 <div class="beerGradeHistory">
     <canvas id="beerGradeHistory" class="chart chart-bar" chart-data="oneBeerData" chart-labels="oneBeerLabels"
     chart-legend="true" chart-series="oneBeerSeries" style="width:50%;height:50%"></canvas>
+</div>
+-->
+<div layout="row">
+    <div class="tvBeerDesc"> Beer {{ beerNum }}: {{ beerDesc }} </div>
+        <md-button class="md-button md-raised" ng-click="nextbeer()">Next beer</md-button>
 </div>
 <div class="beerGradeHistory">
     <canvas id="beerGradeHistory" class="chart chart-bar" chart-data="allBeersData" chart-labels="allBeersLabels"

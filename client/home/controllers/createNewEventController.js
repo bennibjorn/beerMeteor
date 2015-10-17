@@ -37,7 +37,8 @@ angular.module("beerMeteor").controller("CreateNewEventController", ['$scope', '
             "owner": "",
             "started": false,
             "beerList": {},
-            "beerRatings": []
+            "beerRatings": [],
+            "currentBeer": 1
         };
         e.owner = $rootScope.currentUser._id;
         e.name = $scope.eventName;

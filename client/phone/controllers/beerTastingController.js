@@ -41,12 +41,10 @@ $meteor.autorun($scope, function() {
 });
     // adds the rating of the beer to the list
     $scope.addBeer = function(taste, smell, finish) {
-        /*
         if (!$scope.eventObj[0].started) {
             console.log("Event not started/already over");
             return;
         }
-        */
         if (taste === 0 || smell === 0 || finish === 0) {
             console.log("taste, smell and/or finish is not set");
             return;

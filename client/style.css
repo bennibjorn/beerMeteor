@@ -73,3 +73,7 @@ md-slider .md-track-container {
     margin-right: 1em;
     border-bottom: 1px solid #ccc;
 }
+.tvBeerDesc {
+    margin-top: 0.5em;
+    font-size: 1.5em;
+}
