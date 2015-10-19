@@ -4,21 +4,53 @@ Create
 	Anonymous beers (beer 1, beer 2) with a reveal at the end or revealed from the start (Kaldi, Einstok)
         so maybe add a "anonymous" attribute
 
-	Also add a "description" attribute which will be shown on the TV
+	Add option if the admin should control next round or let it be automatic
 
+	Create gets its own page
+		Add beer becomes much more comprehensive
+			Name
+			Description
+			Color (? to color the graph bar with the beer's color ?)
+			Each beer has category dropdown (Ale, Pale ale, Stout, Porter etc.)
+			Optional picture of beer
+			Try to find an API to help with autofill
+
+		Be able to invite people by name or email
+			if the user is not already registered with facebook or email - send email with invitation
+
+		When adding a beer, a side nav shows all beers added so far, enabling you to rearrange them with up/down/delete buttons
+
+		Advanced mode, for much more options for rating, based on a template online
 Room
 
-	If the user is the owner of the room, be able to select if he wants to be the TV, admin or regular user
-
-    Regular user:
-        should not be able to press submit if the event is not started (by setting "started" attribute on event to true) or if he has already submitted a grade for the current beer
-        When he submits, add grade to history chart and publish for TV
-
     TV:
-	   TV sees the rating the current beer is getting, crowd favorite/least favorite and the rating history for all beers
+	   TV sees the rating the current beer is getting, crowd favorite/least favorite
        figure out how to resize charts
-	   show the description of the current beer
+	   show the description of the current beer - make it auto-update after all participants have voted
 
 	Admin:
-        can control the flow of the game, sends "next round" to all clients
-		until the next round is sent, users can only vote on one beer at a time
+        can control the flow of the game, sends "next round" to all clients ( if setting is enabled when creating )
+			until the next round is sent, users can only vote on one beer at a time
+		Can rearrange beer order, with up/down/delete buttons - delete button needs modal confirmation
+
+		BeerList is just names and beer numbers, if clicked, generate a dropdown with more info (for mobile friendlyness)
+
+Profile
+
+	Create a profile page, where you can see your best rated beers
+	Get suggestions based on the beers you've rated the highest
+	Set a nickname
+	Be able to add friends
+
+
+Extra fun stuff
+(options for create)
+	When a user rates a beer 10-10-10, a toastr notification shows up on the TV with something like:
+		"Holy shiet! Benni just had the best beer of his life!"
+	Users get to pick if their ratings can be public or not, default is false
+		If they are public, they can be shown on TV part
+	When creating, hosts can choose if nicknames are allowed to be shown as the user's name
+		To prevent "penisLord" names for official events...
+
+	When a beer has been rated by all participants, show a few random users ratings, the highest and lowest perhaps
+		If they choose to, their comment about the beer will be shown as well as their picture
